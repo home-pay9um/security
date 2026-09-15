@@ -1,0 +1,46 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: security
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+app:
+  security:
+    permit-all-patterns:
+      - "/api/v1/auth/**"
+    cors:
+      allowed-origins:
+        - "http://localhost:3000"
+        - "http://localhost:5173"
+      allowed-methods:
+        - "GET"
+        - "POST"
+        - "PUT"
+        - "DELETE"
+        - "PATCH"
+        - "OPTIONS"
+      allowed-headers:
+        - "*"
+      exposed-headers:
+        - "Authorization"
+        - "Set-Cookie"
+      allow-credentials: true
+      max-age: 3600
+
+jwt:
+  secret-key: ${JWT_SECRET_KEY}
+  access-token-expiration: 3600000 # 1시간
+  refresh-token-expiration: 86400000 # 1일
