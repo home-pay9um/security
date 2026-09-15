@@ -231,11 +231,11 @@ flowchart TD
 
 ```json
 {
-  "username": "pay9um",
+  "username": "user1234",
   "password": "Password1!",
   "passwordConfirm": "Password1!",
-  "email": "pay9um@example.com",
-  "nickname": "페이넘",
+  "email": "user1234@example.com",
+  "nickname": "사용자",
   "phoneNumber": "010-1234-5678"
 }
 ```
@@ -248,7 +248,7 @@ flowchart TD
 
 ```json
 {
-  "username": "pay9um",
+  "username": "user1234",
   "password": "Password1!"
 }
 ```
@@ -265,9 +265,9 @@ flowchart TD
   },
   "user": {
     "uid": "...",
-    "username": "pay9um",
-    "email": "pay9um@example.com",
-    "nickname": "페이넘",
+    "username": "user1234",
+    "email": "user1234@example.com",
+    "nickname": "사용자",
     "phoneNumber": "010-1234-5678",
     "role": "USER"
   }
