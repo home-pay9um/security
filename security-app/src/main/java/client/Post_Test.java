@@ -16,7 +16,7 @@ public class Post_Test {
 
     public static void main(String[] args) {
         // 1. 회원가입 (Signup) 테스트
-//        sendSignupRequest();
+        sendSignupRequest();
 
         // 2. 로그인 (Signin) 테스트
         sendSigninRequest();

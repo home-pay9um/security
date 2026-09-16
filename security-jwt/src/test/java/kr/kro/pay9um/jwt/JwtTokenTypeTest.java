@@ -5,6 +5,10 @@ import kr.kro.pay9um.jwt.provider.JwtTokenProvider;
 import kr.kro.pay9um.jwt.validator.JwtTokenValidator;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneOffset;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class JwtTokenTypeTest {
@@ -14,22 +18,28 @@ class JwtTokenTypeTest {
             86_400_000
     );
 
-    private final JwtTokenProvider tokenProvider = new JwtTokenProvider(JWT_PROPERTIES);
-    private final JwtTokenValidator tokenValidator = new JwtTokenValidator(JWT_PROPERTIES);
+    private static final Clock CLOCK = Clock.fixed(Instant.parse("2026-09-17T00:00:00Z"), ZoneOffset.UTC);
+
+    private final JwtTokenProvider tokenProvider = new JwtTokenProvider(JWT_PROPERTIES, CLOCK);
+    private final JwtTokenValidator tokenValidator = new JwtTokenValidator(JWT_PROPERTIES, CLOCK);
 
     @Test
     void accessTokenIsNotAcceptedAsRefreshToken() {
-        String accessToken = tokenProvider.generateAccessToken("user-uid");
+        String accessToken = tokenProvider.generateAccessToken("user-uid", "session-id");
 
-        assertThat(tokenValidator.validateToken(accessToken, TokenType.ACCESS)).isTrue();
-        assertThat(tokenValidator.validateToken(accessToken, TokenType.REFRESH)).isFalse();
+        assertThat(tokenValidator.validate(accessToken, TokenType.ACCESS)).isPresent();
+        assertThat(tokenValidator.validate(accessToken, TokenType.REFRESH)).isEmpty();
     }
 
     @Test
     void refreshTokenIsNotAcceptedAsAccessToken() {
-        String refreshToken = tokenProvider.generateRefreshToken("user-uid");
+        String refreshToken = tokenProvider.generateRefreshToken(
+                "user-uid",
+                "session-id",
+                CLOCK.instant().plusMillis(JWT_PROPERTIES.refreshTokenExpiration())
+        );
 
-        assertThat(tokenValidator.validateToken(refreshToken, TokenType.REFRESH)).isTrue();
-        assertThat(tokenValidator.validateToken(refreshToken, TokenType.ACCESS)).isFalse();
+        assertThat(tokenValidator.validate(refreshToken, TokenType.REFRESH)).isPresent();
+        assertThat(tokenValidator.validate(refreshToken, TokenType.ACCESS)).isEmpty();
     }
 }

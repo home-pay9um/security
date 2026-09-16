@@ -16,6 +16,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      username: ${REDIS_USERNAME}
+      password: ${REDIS_PASSWORD}
+      database: ${REDIS_DATABASE}
 
 app:
   security:
@@ -42,5 +49,5 @@ app:
 
 jwt:
   secret-key: ${JWT_SECRET_KEY}
-  access-token-expiration: 3600000 # 1시간
-  refresh-token-expiration: 86400000 # 1일
+  access-token-expiration: 21600000 # 6시간
+  refresh-token-expiration: 1209600000 # 2주

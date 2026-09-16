@@ -7,6 +7,7 @@ public record TokenResponse(
         String grantType,
         String accessToken,
         String refreshToken,
-        long accessTokenExpiresIn
+        long accessTokenExpiresIn,
+        long refreshTokenExpiresIn
 ) {
 }

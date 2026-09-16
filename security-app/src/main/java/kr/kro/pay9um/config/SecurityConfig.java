@@ -1,7 +1,7 @@
 package kr.kro.pay9um.config;
 
 import kr.kro.pay9um.jwt.config.JwtProperties;
-import kr.kro.pay9um.jwt.filter.JwtAuthenticationFilter;
+import kr.kro.pay9um.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
